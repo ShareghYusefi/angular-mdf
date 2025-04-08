@@ -1,0 +1,33 @@
+<!-- We need to bind our component reactiveForm instance to the template form using the formGroup directive. -->
+<form [formGroup]="reactiveForm">
+  <div class="mb-3">
+    <label for="email" class="form-label">Email address</label>
+    <!-- We need to bind our input to the form control using the formControlName directive. -->
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      aria-describedby="emailHelp"
+      formControlName="email"
+    />
+    <div id="emailHelp" class="form-text">
+      We'll never share your email with anyone else.
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password"
+      formControlName="password"
+    />
+  </div>
+  <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="subscribe" />
+    <label class="form-check-label" for="subscribe">Check me out</label>
+  </div>
+  <button type="submit" (click)="onSubmit()" class="btn btn-primary">Submit</button>
+</form>
+
+<pre>{{ reactiveForm.value | json }}</pre>
