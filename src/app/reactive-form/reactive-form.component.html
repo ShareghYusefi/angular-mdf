@@ -10,8 +10,16 @@
       aria-describedby="emailHelp"
       formControlName="email"
     />
-    <div id="emailHelp" class="form-text">
-      We'll never share your email with anyone else.
+    <!-- ? means optional chaining. It will return undefined if the property does not exist. -->
+    <div
+      *ngIf="email?.touched && email?.invalid && email?.errors"
+      class="text-danger"
+    >
+      <div *ngIf="email?.errors?.['required']">Email is required.</div>
+      <div *ngIf="email?.errors?.['email']">Email is invalid.</div>
+      <div *ngIf="email?.errors?.['minlength']">
+        Please type a minimum of 5 characters.
+      </div>
     </div>
   </div>
   <div class="mb-3">
@@ -22,12 +30,34 @@
       id="password"
       formControlName="password"
     />
+    <div
+      *ngIf="password?.touched && password?.invalid && password?.errors"
+      class="text-danger"
+    >
+      <div *ngIf="password?.errors?.['required']">Password is required.</div>
+      <div *ngIf="password?.errors?.['minlength']">
+        Please type a minimum of 5 characters.
+      </div>
+    </div>
   </div>
   <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="subscribe" />
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="subscribe"
+      formControlName="subscribe"
+    />
     <label class="form-check-label" for="subscribe">Check me out</label>
   </div>
-  <button type="submit" (click)="onSubmit()" class="btn btn-primary">Submit</button>
+  <button
+    type="submit"
+    (click)="onSubmit()"
+    class="btn btn-primary"
+    [disabled]="reactiveForm.invalid"
+  >
+    Submit
+  </button>
 </form>
 
+<h2>Reactive Form Value</h2>
 <pre>{{ reactiveForm.value | json }}</pre>

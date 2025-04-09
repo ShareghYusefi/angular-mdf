@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'reactive-form',
@@ -8,20 +13,30 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrl: './reactive-form.component.css',
 })
 export class ReactiveFormComponent {
-  // ! means that the variable will be initialized later
-  reactiveForm: FormGroup = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
-  });
+  reactiveForm: FormGroup;
 
   // We can use a FormBuilder instance via dependency injection to create a form group
-  // constructor(private formBuilderInstance: FormBuilder) {
-  //   // Create a form group with two form controls: name and email
-  //   this.reactiveForm = this.formBuilderInstance.group({
-  //     email: '',
-  //     password: '',
-  //   });
-  // }
+  constructor(private formBuilderInstance: FormBuilder) {
+    // Create a form group with two form controls: name and email
+    this.reactiveForm = this.formBuilderInstance.group({
+      // We can use Validators to specify validation rules for each form control
+      email: [
+        '',
+        [Validators.email, Validators.required, Validators.minLength(5)],
+      ],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+      subscribe: [false],
+    });
+  }
+
+  // We can use getters to access the form controls in the template
+  get email() {
+    return this.reactiveForm.get('email');
+  }
+
+  get password() {
+    return this.reactiveForm.get('password');
+  }
 
   onSubmit() {
     console.log(this.reactiveForm.value);
