@@ -38,6 +38,9 @@
       <div *ngIf="password?.errors?.['minlength']">
         Please type a minimum of 5 characters.
       </div>
+      <div *ngIf="password?.errors?.['avoidWord']">
+        Password cannot have "hack" in it.
+      </div>
     </div>
   </div>
   <div class="mb-3 form-check">
@@ -61,3 +64,6 @@
 
 <h2>Reactive Form Value</h2>
 <pre>{{ reactiveForm.value | json }}</pre>
+
+<h2>Password Errors</h2>
+<pre>{{ password?.errors | json }}</pre>

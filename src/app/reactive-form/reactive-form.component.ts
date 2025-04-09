@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { avoidWord } from '../customValidation';
 
 @Component({
   selector: 'reactive-form',
@@ -24,7 +25,7 @@ export class ReactiveFormComponent {
         '',
         [Validators.email, Validators.required, Validators.minLength(5)],
       ],
-      password: ['', [Validators.required, Validators.minLength(5)]],
+      password: ['', [Validators.required, Validators.minLength(5), avoidWord]],
       subscribe: [false],
     });
   }
